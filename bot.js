@@ -24,14 +24,44 @@ function cinvirtString(str) {
 						.replace(/[àèò]/g,  'ì');
 }
 
+// function postSarcasm(tweet) {
+// 	console.log(tweet);
+// 	if (tweet.in_reply_to_user_id_str) {
+// 		// Get the text from the parent tweet
+// 		var text = getParentTweet(tweet.in_reply_to_user_id_str);
+// 		text = cinvirtString(text);
+// 		console.log(text);
+// 	}
+// }
+
 // Get the tweet by Id using node-twitter to get the original tweet from 'in_reply_to_status_id_str'
-function getParentTweet(statusIn) {
-	T.get('statuses/show/:id', { id: statusIn },
+function postSarcasm(tweet) {
+	// Get parent tweet
+	// var Tid = tweet.id;
+	// console.log(tweet);
+	T.get('statuses/show/:id', { id: tweet.in_reply_to_status_id_str },
 		function (err, data, response) {
 			if (!err) {
+				console.log('Got parent data OK!');
 				// console.log(data);
 				// console.log(cinvirtString(data.text));
-				return data.text;
+				var text = cinvirtString(data.text);
+				var url = 'https://twitter.com/' + data.user.screen_name + '/status/' + data.id_str;
+				// console.log(text);
+				// console.log(url);
+				// Post text via response
+				T.post('statuses/update',
+					{
+						status: text + ' ' + url
+						// status: '@' + data.user.screen_name + ' ' + text ,
+						// in_reply_to_status_id: data.id_str
+					}, function(err, data, response) {
+						console.log('Tweet posted');
+				  	// console.log(data);
+				});
+			} else {
+				console.log('Error');
+				console.log(err);
 			}
 		}
 	);
@@ -56,8 +86,9 @@ function listenToMasses() {
 
   twitterStreamClient.on('tweet', function(tweet) {
       console.log('A new request is on the way');
-      console.log(tweet);
-      // postSarcasm(tweet.user.screen_name, tweet.id_str, tweet.text);
+			// console.log(tweet);
+      // console.log(tweet);
+      postSarcasm(tweet);
   });
 
   twitterStreamClient.on('close', function() {
@@ -72,7 +103,7 @@ function listenToMasses() {
 }
 
 // Start listening to masses to offer our Sarcasm for free
- // listenToMasses();
+ listenToMasses();
 
 // Challenge 2
 // var Tid = '1035490030284881920';
