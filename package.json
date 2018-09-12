@@ -1,0 +1,19 @@
+{
+  "name": "tiquismiquis-bot",
+  "version": "1.0.0",
+  "description": "Sarcasm for the masses",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alfonsofonso/tiquismiquis-bot.git"
+  },
+  "author": "@alfonsofonso",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alfonsofonso/tiquismiquis-bot/issues"
+  },
+  "homepage": "https://github.com/alfonsofonso/tiquismiquis-bot#readme"
+}
