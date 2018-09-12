@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/alfonsofonso/tiquismiquis-bot/issues"
   },
-  "homepage": "https://github.com/alfonsofonso/tiquismiquis-bot#readme"
+  "homepage": "https://github.com/alfonsofonso/tiquismiquis-bot#readme",
+  "dependencies": {
+    "node-twitter": "^0.5.3"
+  }
 }
