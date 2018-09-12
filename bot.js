@@ -8,6 +8,14 @@ var twitterRestClient = new Twitter.RestClient(
   conf.access_token_secret
 );
 
+var Twit = require('twit')
+var T = new Twit({
+  consumer_key:         conf.consumer_key,
+  consumer_secret:      conf.consumer_secret,
+  access_token:         conf.access_token,
+  access_token_secret:  conf.access_token_secret
+})
+
 // Helper function
 function cinvirtString(str) {
 	return str.replace(/[AEOU]/g, 'I')
@@ -15,6 +23,20 @@ function cinvirtString(str) {
 						.replace(/[áéóú]/g, 'í')
 						.replace(/[àèò]/g,  'ì');
 }
+
+// Get the tweet by Id using node-twitter to get the original tweet from 'in_reply_to_status_id_str'
+function getParentTweet(statusIn) {
+	T.get('statuses/show/:id', { id: statusIn },
+		function (err, data, response) {
+			if (!err) {
+				// console.log(data);
+				// console.log(cinvirtString(data.text));
+				return data.text;
+			}
+		}
+	);
+}
+
 
 // Main function to offer the service to people
 function listenToMasses() {
@@ -30,7 +52,7 @@ function listenToMasses() {
     twitterStreamClient.stop();
   }
 
-  twitterStreamClient.start(['@tiquismiquisbot']);
+  twitterStreamClient.start(['@istipidi']);
 
   twitterStreamClient.on('tweet', function(tweet) {
       console.log('A new request is on the way');
@@ -50,10 +72,14 @@ function listenToMasses() {
 }
 
 // Start listening to masses to offer our Sarcasm for free
-// listenToMasses();
+ // listenToMasses();
+
+// Challenge 2
+// var Tid = '1035490030284881920';
+// getParentTweet(Tid);
 
 // Challenge 1
-var strTest = 'Se cumple un año del golpe a la democracia. El 6-7 de sept el separatismo silenció a la oposición y atropelló los derechos de millones de catalanes. Hoy, el Parlament está cerrado y siguen degradando la institución. No permitiremos que vuelvan a pisotear la democracia. Nunca más.';
-console.log(strTest);
-console.log('---');
-console.log(cinvirtString(strTest));
+// var strTest = 'Hello Twitter! #myfirstTweet';
+// console.log(strTest);
+// console.log('---');
+// console.log(cinvirtString(strTest));

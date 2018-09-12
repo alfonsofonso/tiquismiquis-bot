@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/alfonsofonso/tiquismiquis-bot#readme",
   "dependencies": {
-    "node-twitter": "^0.5.3"
+    "node-twitter": "^0.5.3",
+    "twit": "^2.2.11"
   }
 }
